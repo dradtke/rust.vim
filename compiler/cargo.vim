@@ -21,13 +21,11 @@ au QuickfixCmdPost make call s:FixRelativePaths()
 " to be relative to the current directory instead of Cargo.toml.
 function! s:FixRelativePaths()
     let qflist = getqflist()
-    let has_errors = 0
     let toml = FindCargoToml()
     for qf in qflist
         if !qf['valid']
             continue
         endif
-        let has_errors = 1
         let filename = bufname(qf['bufnr'])
         if stridx(filename, toml) == -1
             let filename = toml.filename
